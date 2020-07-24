@@ -80,44 +80,73 @@ class Graph:
                     dft_stack.push(next_vert)
         return visited
 
-    def dft_recursive(self, starting_vertex):
+    # For recursive
+    # Need to have a base case
+    # Progress toward the base case
+    # Call itself
+    
+
+    def dft_recursive(self, starting_vertex, visited=None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        pass  # TODO
-
+        if visited == None:
+            visited = set()
+        # Check if we have been visited
+        if starting_vertex not in visited:
+            visited.add(starting_vertex)
+        # Base case: if no neighbors
+        neighbors = self.get_neighbors(starting_vertex)
+        if len(neighbors) == 0:
+            return visited
+        #If we do have neighbors, iterate over them and recurse for each one
+        for neighbor in neighbors:
+            self.dfs_recursive(neighbor, visited)
+        
+        
     def bfs(self, starting_vertex, destination_vertex):
         """
         Return a list containing the shortest path from
         starting_vertex to destination_vertex in
         breath-first order.
+        
+        1. Find the target node.
+        2. Keep track of how you got there.
         """
+
         # Create an empty queue and enqueue A PATH TO the starting vertex ID.
         q = Queue()
         # Create a Set to store visited vertices.
         visited = set()
+        path = [starting_vertex]
+        q.enqueue(path)
         # While the queue is not empty...
         while q.size() > 0:
-        # Dequeue the first PATH 
-            path = q.dequeue()
-        # Grab the last vertex from the PATH
-        last_vertex = path[-1]
-        # If that vertext has not been visited...
-        # CHECK IF IT'S THE TARGET 
-        if last_vertex == destination_vertex:
-            # IF SO, RETURN PATH 
-            return path
-        else:
-            if last_vertex not in visited:
-                
-        # Mark it as visited 
-        # Then add A PATH TO its neighbors to the back of the queue. 
-        # COPY THE PATH 
-        # APPEND THE NEIGHBOR TO THE BACK 
-        
+        # Dequeue from the front of the line, this is our current path.
+            current_path = q.dequeue()
+        # current_node is the last thing in the path
+            current_node = current_path[-1]
+        # check if this is the target node
+            if current_node == destination_vertex:
+        # if so, return
+                return current_path
+        ## Check if we've visited yet, if not:
+        if current_node not in visited:
+        # mark as visited
+            visited.add(current_node)
+
+        # get the current node's neighbors
+            neighbors = self.get_neighbors(current_node)
+        # iterate over the neighbors
+            for neighbor in neighbors:
+        # add the neighbor to the path
+                neighbor_path = current_path.copy()
+                neighbor_path.append(neighbor)
+        # enqueue the neighbor's path
+                q.enqueue(neighbor_path)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
