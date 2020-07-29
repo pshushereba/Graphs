@@ -161,9 +161,9 @@ class Graph:
         visited = set()
         path = [starting_vertex]
         s.push(path)
-        # While the queue is not empty...
+        # While the stack is not empty...
         while s.size() > 0:
-        # Desueue from the front of the line, this is our current path.
+        # Pop from the top of the stack, this is our current path.
             current_path = s.pop()
         # current_node is the last thing in the path
             current_node = current_path[-1]
@@ -183,7 +183,7 @@ class Graph:
                     # add the neighbor to the path
                     neighbor_path = current_path.copy()
                     neighbor_path.append(neighbor)
-                    # enqueue the neighbor's path
+                    # push the neighbor's path on to the stack
                     s.push(neighbor_path)
 
     def dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=None):
@@ -212,6 +212,11 @@ class Graph:
             for neighbor in neighbors:
                 neighbor_path = path.copy()
                 neighbor_path.append(neighbor)
+                # When we hit the base case (starting_vertex == destination_vertex), we will return the path. But we still want to resolve
+                # the rest of the recursive calls. So when we hit the base case, the path will be returned to the previous call, and resolving
+                # each successive call will continue to add on to the path, until the last call is resolved, returning the full path.
+                # Here we are assigning the recursive call to a value, and then checking each pass through the loop if that variable has a
+                # value (the path). If so, then we return that value.
                 ret = self.dfs_recursive(neighbor, destination_vertex, visited, neighbor_path)
                 if ret:
                     return ret

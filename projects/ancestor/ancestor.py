@@ -21,6 +21,7 @@ def earliest_ancestor(ancestors, starting_node):
 # (parent, child)
 # Idea: Write a helper function to find the parents for a given child.
 # To finish: add a third variable, node_id. If we find two nodes with the same depth, we can compare the id's.
+# Could also do this with a depth first search.
 
 def find_parents(ancestors, child):
     parents = []

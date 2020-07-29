@@ -1,3 +1,5 @@
+import random
+
 class User:
     def __init__(self, name):
         self.name = name
@@ -6,11 +8,17 @@ class SocialGraph:
     def __init__(self):
         self.last_id = 0
         self.users = {}
+
+        # this is your adjacency list representation of a graph.
         self.friendships = {}
 
     def add_friendship(self, user_id, friend_id):
         """
         Creates a bi-directional friendship
+
+        Therefore creates an undirected graph
+
+        Makes TWO friendships
         """
         if user_id == friend_id:
             print("WARNING: You cannot be friends with yourself")
@@ -42,10 +50,11 @@ class SocialGraph:
         self.last_id = 0
         self.users = {}
         self.friendships = {}
-        # !!!! IMPLEMENT ME
 
         # Add users
-
+        for user in range(num_users):
+            self.add_user(user)
+            
         # Create friendships
 
     def get_all_social_paths(self, user_id):
